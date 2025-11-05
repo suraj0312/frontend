@@ -496,7 +496,9 @@ export default function MainLayout() {
           ) : activeView === "addAgent" ? (
             <AddAgentModal
               onAdd={handleAddAgent}
+              existingAgentNames={agents.map((agent) => agent.name)}
               // onCancel={() => handleSidebarButtonClick("chat")}
+
               onCancel={() => handleOnBack("chat")}
             />
           ) : activeView === "createMultiAgent" ? (

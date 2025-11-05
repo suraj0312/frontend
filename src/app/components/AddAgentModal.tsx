@@ -202,6 +202,7 @@ export interface AgentCard {
 //   subAgents?: Agent[];
 // }
 interface AddAgentModalProps {
+  existingAgentNames: string[];
   onAdd: (agent: {
     name: string;
     url: string;
@@ -216,7 +217,7 @@ interface AddAgentModalProps {
   onCancel: () => void;
 }
 
-export default function AddAgentModal({ onAdd, onCancel }: AddAgentModalProps) {
+export default function AddAgentModal({ onAdd, onCancel, existingAgentNames }: AddAgentModalProps) {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const [instructions, setInstructions] = useState("");
@@ -272,6 +273,10 @@ export default function AddAgentModal({ onAdd, onCancel }: AddAgentModalProps) {
           <button
             disabled={!isFormValid}
             onClick={() => {
+              if (existingAgentNames.includes(name.trim())) {
+                window.alert("Agent with given name already exist, use different name");
+                return;
+              }
               onAdd({
                 name,
                 url,
