@@ -120,6 +120,7 @@ export default function CreateMultiAgentForm({
   const threadId = useCopilotContext().threadId;
 
   const isFormValid = name.trim() !== "" && instructions.trim() !== "" && selected.length > 0;
+  const agentExists = agents.some((agent) => agent.name === name);
 
   const selectedAgents = agents.filter((a) => selected.includes(a.name + a.url));
 
@@ -133,6 +134,10 @@ export default function CreateMultiAgentForm({
           <button
             disabled={!isFormValid}
             onClick={() => {
+              if (agentExists) {
+                alert("Agent with given name already exist, use different name.");
+                return;
+              }
               if (isFormValid) {
                 onCreate({
                   name,
@@ -146,7 +151,16 @@ export default function CreateMultiAgentForm({
                   usage: 0,
                 });
               }
-            }}
+            }}>
+            Create
+          </button>
+          <button onClick={onCancel}>Cancel</button>
+        </div>
+      </div>
+      {/* Additional JSX can stay unchanged */}
+    </div>
+  );
+}
           >
             Create
           </button>
